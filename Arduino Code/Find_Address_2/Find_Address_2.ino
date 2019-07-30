@@ -1,3 +1,4 @@
+// need to install the library OneWire in the Arduino IDE before this will successfully compile - go to Manage Libraries ...
 #include <OneWire.h>
 
 OneWire  ds(10);  // This is where DQ of your DS18B20 will connect.
@@ -5,6 +6,7 @@ OneWire  ds(10);  // This is where DQ of your DS18B20 will connect.
 void setup(void) {
   Serial.begin(9600);
   getDeviceAddress();
+  // Serial.println("Ending setup...\n\r");
 }
 
 void getDeviceAddress(void) {

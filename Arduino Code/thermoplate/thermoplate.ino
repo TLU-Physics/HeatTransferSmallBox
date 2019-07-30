@@ -14,8 +14,10 @@
 #include <DallasTemperature.h>
 #include <EEPROM.h>
 
-#define NDevices 100                    // Number of DS18B20s
+#define NDevices 1                      // Number of DS18B20s
 #define BUS 10                          // OneWire bus on pin 10
+
+byte addr[8] = {0x28, 0x56, 0xD2, 0x38, 0x0A, 0x00, 0x00, 0x61};
 
 OneWire oneWire(BUS);
 DallasTemperature sensors(&oneWire);    // pass to the DT library
@@ -35,11 +37,12 @@ void loop() {
     sensors.requestTemperatures();
 
     // Now get those temperatures
-    EAddress = 0;
+    // EAddress = 0;
     for (byte j=0;j<NDevices;j++) {     // loop over devices
         for (byte k=0;k<8;k++) {        // loop over address bytes
-            TAddress[k] = EEPROM.read(EAddress);
-            EAddress += 1;
+            // TAddress[k] = EEPROM.read(EAddress);
+            TAddress[k] = addr[k];
+            // EAddress += 1;
         }
         // Now TAddress is the next sensor address, read it
         // and send the results on the serial line.
@@ -49,4 +52,3 @@ void loop() {
     // Now we're done with all sensors, so end the line.
     Serial.println("");
 }
-
